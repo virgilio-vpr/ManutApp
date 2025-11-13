@@ -30,9 +30,9 @@ export const specialties = [
 ];
 
 export const priorities = [
-    { id: "EMERGENCIA", name: "Emergência (Atendimento Imediato)" },
-    { id: "URGENCIA", name: "Urgência (Atendimento em até 2 horas)" },
-    { id: "ALTA", name: "Alta (Atendimento em até 24 horas)" },
-    { id: "MEDIA", name: "Média (Atendimento em até 3 dias)" },
-    { id: "BAIXA", name: "Baixa (Atendimento em até 7 dias)" },
+    { id: "EMERGENCIA", name: "Emergência (Atendimento em15 minutos)" },
+    { id: "URGENCIA", name: "Urgência (Atendimento em 45 minutos)" },
+    { id: "ALTA", name: "Alta (Atendimento em 3 dias)" },
+    { id: "MEDIA", name: "Média (Atendimento em até 10 dias)" },
+    { id: "BAIXA", name: "Baixa (Atendimento em até 30 dias)" },
 ];
