@@ -7,6 +7,8 @@ import Panel from './pages/Panel';
 import DashboardHome from './pages/dashboard/Home';
 import PlaceholderPage from './pages/dashboard/PlaceholderPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import ServiceOrderList from './pages/dashboard/service-orders/ServiceOrderList';
+import NewServiceOrder from './pages/dashboard/service-orders/NewServiceOrder';
 
 function App() {
   return (
@@ -24,7 +26,10 @@ function App() {
           <Route path="maintenance/corrective" element={<PlaceholderPage title="Manutenção Corretiva" />} />
           <Route path="maintenance/preventive" element={<PlaceholderPage title="Manutenção Preventiva" />} />
           <Route path="kpi" element={<PlaceholderPage title="Indicadores de Desempenho (KPI)" />} />
-          <Route path="service-orders" element={<PlaceholderPage title="Ordens de Serviço" />} />
+          
+          <Route path="service-orders" element={<ServiceOrderList />} />
+          <Route path="service-orders/new" element={<NewServiceOrder />} />
+
           <Route path="registration/assets" element={<PlaceholderPage title="Cadastro de Ativos" />} />
           <Route path="registration/equipments" element={<PlaceholderPage title="Cadastro de Equipamentos" />} />
           <Route path="registration/cost-center" element={<PlaceholderPage title="Cadastro de Centro de Custo" />} />

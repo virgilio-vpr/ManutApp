@@ -9,3 +9,30 @@ export const mockUsers: User[] = [
 ];
 
 export const userRoles: UserRole[] = ['SOLICITANTE', 'EXECUTOR', 'PLANEJADOR', 'GESTOR', 'ADMIN'];
+
+export const locations = [
+    "Ala Norte - 1º Andar",
+    "Ala Sul - Térreo",
+    "Centro Cirúrgico",
+    "UTI Adulto",
+    "Laboratório Central",
+    "Almoxarifado",
+];
+
+export const specialties = [
+    "Elétrica",
+    "Hidráulica",
+    "Gasoterapia",
+    "Predial",
+    "Ar Condicionado",
+    "Marcenaria",
+    "Equipamento Médico",
+];
+
+export const priorities = [
+    { id: "EMERGENCIA", name: "Emergência (Atendimento Imediato)" },
+    { id: "URGENCIA", name: "Urgência (Atendimento em até 2 horas)" },
+    { id: "ALTA", name: "Alta (Atendimento em até 24 horas)" },
+    { id: "MEDIA", name: "Média (Atendimento em até 3 dias)" },
+    { id: "BAIXA", name: "Baixa (Atendimento em até 7 dias)" },
+];
