@@ -6,7 +6,8 @@ import {
   Factory,
   Users,
   BarChart3,
-  FilePlus2
+  FilePlus2,
+  CalendarDays
 } from 'lucide-react';
 import { UserRole } from '../types';
 
@@ -42,6 +43,12 @@ export const navItems: NavItem[] = [
         title: 'Preventiva',
         icon: Settings,
         href: '/maintenance/preventive',
+      },
+      {
+        title: 'Cronograma',
+        icon: CalendarDays,
+        href: '/maintenance/schedule',
+        roles: ['ADMIN', 'GESTOR', 'PLANEJADOR'],
       },
     ],
   },

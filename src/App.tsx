@@ -9,8 +9,14 @@ import PlaceholderPage from './pages/dashboard/PlaceholderPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import ServiceOrderList from './pages/dashboard/service-orders/ServiceOrderList';
 import NewServiceOrder from './pages/dashboard/service-orders/NewServiceOrder';
+import ServiceOrderDetail from './pages/dashboard/service-orders/ServiceOrderDetail';
+import CorrectiveMaintenanceList from './pages/dashboard/maintenance/CorrectiveMaintenanceList';
+import EditServiceOrder from './pages/dashboard/maintenance/EditServiceOrder';
+import PreventiveMaintenanceList from './pages/dashboard/maintenance/PreventiveMaintenanceList';
+import NewPreventiveOrder from './pages/dashboard/maintenance/NewPreventiveOrder';
+import MaintenanceSchedule from './pages/dashboard/maintenance/MaintenanceSchedule';
 
-function App() {
+export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
@@ -23,12 +29,18 @@ function App() {
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/panel" replace />} />
           <Route path="dashboard" element={<DashboardHome />} />
-          <Route path="maintenance/corrective" element={<PlaceholderPage title="Manutenção Corretiva" />} />
-          <Route path="maintenance/preventive" element={<PlaceholderPage title="Manutenção Preventiva" />} />
+          
+          <Route path="maintenance/corrective" element={<CorrectiveMaintenanceList />} />
+          <Route path="maintenance/corrective/edit/:id" element={<EditServiceOrder />} />
+          <Route path="maintenance/preventive" element={<PreventiveMaintenanceList />} />
+          <Route path="maintenance/preventive/new" element={<NewPreventiveOrder />} />
+          <Route path="maintenance/schedule" element={<MaintenanceSchedule />} />
+
           <Route path="kpi" element={<PlaceholderPage title="Indicadores de Desempenho (KPI)" />} />
           
           <Route path="service-orders" element={<ServiceOrderList />} />
           <Route path="service-orders/new" element={<NewServiceOrder />} />
+          <Route path="service-orders/:id" element={<ServiceOrderDetail />} />
 
           <Route path="registration/assets" element={<PlaceholderPage title="Cadastro de Ativos" />} />
           <Route path="registration/equipments" element={<PlaceholderPage title="Cadastro de Equipamentos" />} />
@@ -43,5 +55,3 @@ function App() {
     </Routes>
   );
 }
-
-export default App;

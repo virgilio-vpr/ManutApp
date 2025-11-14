@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { PlusCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '../../../components/ui/Card';
 import { Badge, BadgeProps } from '../../../components/ui/Badge';
 import { ServiceOrder, ServiceOrderStatus, Priority } from '../../../types';
-import { mockServiceOrders, mockUsers } from '../../../lib/mock-data';
-import { useAuth } from '../../../hooks/useAuth';
+import { mockServiceOrders } from '../../../lib/mock-data';
 
 const statusMap: Record<ServiceOrderStatus, { text: string; variant: BadgeProps['variant'] }> = {
   ABERTA: { text: 'Aberta', variant: 'info' },
@@ -27,47 +25,28 @@ const priorityMap: Record<Priority, { text: string; variant: BadgeProps['variant
   BAIXA: { text: 'Baixa', variant: 'secondary' },
 };
 
-const ServiceOrderList: React.FC = () => {
+const CorrectiveMaintenanceList: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const [filteredOrders, setFilteredOrders] = useState<ServiceOrder[]>([]);
+  const [ordersToPlan, setOrdersToPlan] = useState<ServiceOrder[]>([]);
 
   useEffect(() => {
-    if (!user) return;
-
-    let data = mockServiceOrders;
-
-    if (user.role === 'EXECUTOR') {
-      data = mockServiceOrders.filter(order => order.executorId === user.id);
-    } else if (user.role === 'SOLICITANTE') {
-      data = mockServiceOrders.filter(order => order.requester === user.name);
-    }
-    
-    setFilteredOrders(data);
-  }, [user]);
+    // Filtra ordens que precisam de planejamento (status 'Aberta')
+    const data = mockServiceOrders.filter(order => order.status === 'ABERTA');
+    setOrdersToPlan(data);
+  }, []);
 
   const handleRowClick = (id: string) => {
-    navigate(`/service-orders/${id}`);
-  };
-
-  const getExecutorName = (executorId?: string) => {
-    if (!executorId) return 'N/A';
-    const executor = mockUsers.find(u => u.id === executorId);
-    return executor?.name || 'Desconhecido';
+    navigate(`/maintenance/corrective/edit/${id}`);
   };
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-foreground">Ordens de Serviço</h1>
-        <Link
-          to="/service-orders/new"
-          className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-        >
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Abrir Nova Ordem de Serviço
-        </Link>
+        <h1 className="text-3xl font-bold text-foreground">Planejamento de Corretivas</h1>
       </div>
+      <p className="mb-6 text-muted-foreground">
+        Abaixo estão as ordens de serviço abertas aguardando planejamento. Clique em uma OS para editar, atribuir um executor e alterar o status.
+      </p>
       <Card>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
@@ -77,13 +56,12 @@ const ServiceOrderList: React.FC = () => {
                   <th scope="col" className="px-6 py-3">OS</th>
                   <th scope="col" className="px-6 py-3">Prioridade</th>
                   <th scope="col" className="px-6 py-3">Descrição</th>
-                  <th scope="col" className="px-6 py-3">Executor</th>
-                  <th scope="col" className="px-6 py-3">Status</th>
+                  <th scope="col" className="px-6 py-3">Localização</th>
                   <th scope="col" className="px-6 py-3">Data</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredOrders.map((order) => (
+                {ordersToPlan.map((order) => (
                   <tr
                     key={order.id}
                     onClick={() => handleRowClick(order.id)}
@@ -96,12 +74,7 @@ const ServiceOrderList: React.FC = () => {
                       </Badge>
                     </td>
                     <td className="px-6 py-4 max-w-sm truncate">{order.description}</td>
-                    <td className="px-6 py-4">{getExecutorName(order.executorId)}</td>
-                    <td className="px-6 py-4">
-                      <Badge variant={statusMap[order.status]?.variant || 'default'}>
-                        {statusMap[order.status]?.text || order.status}
-                      </Badge>
-                    </td>
+                    <td className="px-6 py-4">{order.location}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {new Date(order.createdAt).toLocaleDateString('pt-BR')}
                     </td>
@@ -112,13 +85,13 @@ const ServiceOrderList: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-      {filteredOrders.length === 0 && (
+      {ordersToPlan.length === 0 && (
          <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-border bg-card mt-6">
-            <p className="text-muted-foreground">Nenhuma ordem de serviço encontrada para seu perfil.</p>
+            <p className="text-muted-foreground">Nenhuma ordem de serviço para planejar no momento.</p>
          </div>
       )}
     </div>
   );
 };
 
-export default ServiceOrderList;
+export default CorrectiveMaintenanceList;
