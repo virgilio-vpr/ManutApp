@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, UserRole } from '../types';
+import { User } from '../types';
 import { mockUsers } from '../lib/mock-data';
 
 interface AuthContextType {
@@ -18,6 +18,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  /*
+  // O trecho abaixo foi comentado para forçar o login a cada recarga da aplicação, conforme solicitado.
+  // Ele era responsável por restaurar a sessão do usuário a partir do localStorage.
   useEffect(() => {
     try {
         const storedToken = localStorage.getItem('authToken');
@@ -32,6 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.removeItem('authUser');
     }
   }, []);
+  */
 
   const login = useCallback(async (email: string, password: string) => {
     // Simula uma chamada de API
